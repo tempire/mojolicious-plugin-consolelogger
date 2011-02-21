@@ -74,15 +74,11 @@ sub _format_msg {
 
 =head1 NAME
 
-=head1 DESCRIPTION
-
-=head1 NAME
-
 Mojolicious::Plugin::ConsoleLogger
 
 =head1 DESCRIPTION
 
-Browser console logging
+Browser console logging for webkit dev tools/firebug
 
 =head1 USAGE
 
