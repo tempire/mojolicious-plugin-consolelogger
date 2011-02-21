@@ -47,6 +47,10 @@ L<http://github.com/tempire/mojolicious-plugin-basicauth>
 
 0.01
 
+=head1 CREDITS
+
+Implementation stolen from L<Plack::Middleware::ConsoleLogger>
+
 =head1 AUTHOR
 
 Glen Hinkle tempire@cpan.org
