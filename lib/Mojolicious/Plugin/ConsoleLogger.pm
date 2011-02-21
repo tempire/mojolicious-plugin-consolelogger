@@ -115,7 +115,7 @@ L<Mojolicious>
 
 =head1 DEVELOPMENT
 
-L<http://github.com/tempire/mojolicious-plugin-basicauth>
+L<http://github.com/tempire/mojolicious-plugin-consolelogger>
 
 =head1 VERSION
 
