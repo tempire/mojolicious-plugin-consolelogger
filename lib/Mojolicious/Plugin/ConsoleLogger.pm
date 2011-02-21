@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious::Plugin';
 use Mojo::ByteStream;
 use Mojo::JSON;
 
+our $VERSION = 0.01;
+
 has logs => sub {
     return {
         fatal => [],
@@ -74,11 +76,11 @@ sub _format_msg {
 
 =head1 NAME
 
-Mojolicious::Plugin::ConsoleLogger
+Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 =head1 DESCRIPTION
 
-Browser console logging for webkit dev tools/firebug
+L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious log messages to your browser's console tool.
 
 =head1 USAGE
 
