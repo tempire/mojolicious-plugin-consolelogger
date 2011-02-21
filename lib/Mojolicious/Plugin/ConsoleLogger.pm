@@ -93,7 +93,7 @@ Browser console logging for webkit dev tools/firebug
         app->log->fatal("This is really bad");
         app->log->info("This isn't bad at all");
 
-        shift->render(text => 'Im in ur browzer, logginz ur console');
+        shift->render(text => 'Ahm in ur browzer, logginz ur console');
     };
 
     app->start;
