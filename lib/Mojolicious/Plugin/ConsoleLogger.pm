@@ -4,7 +4,7 @@ use Mojo::Base 'Mojolicious::Plugin';
 use Mojo::ByteStream;
 use Mojo::JSON;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 has logs => sub {
     return {
@@ -111,7 +111,7 @@ L<http://github.com/tempire/mojolicious-plugin-consolelogger>
 
 =head1 VERSION
 
-0.01
+0.02
 
 =head1 CREDITS
 
