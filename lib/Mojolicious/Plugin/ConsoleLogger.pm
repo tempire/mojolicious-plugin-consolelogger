@@ -31,33 +31,27 @@ sub register {
     };
 
     $app->hook(
-
-        # send logs to browser after rendering
         after_dispatch => sub {
             my $self = shift;
-            my $body = $self->res->body;
+            my $logs = $plugin->logs;
 
             # leave static content untouched
             return if $self->stash('mojo.static');
 
-            $self->res->body($self->res->body . _js_log($plugin->logs));
+            my $str = "\n<!-- Mojolicious logging -->\n<script>";
+
+            for (sort keys %$logs) {
+                next if !@{$logs->{$_}};
+                $str .= "console.group(\"$_\"); ";
+                $str .= _format_msg($_) for @{$logs->{$_}};
+                $str .= "console.groupEnd(\"$_\"); ";
+            }
+
+            $str .= "</script>\n";
+
+            $self->res->body($self->res->body . $str);
         }
     );
-}
-
-sub _js_log {
-    my $logs = shift;
-
-    my $str = "<!-- Mojolicious logging -->\n<script>";
-
-    for (sort keys %$logs) {
-        next if !@{$logs->{$_}};
-        $str .= "console.group(\"$_\"); ";
-        $str .= _format_msg($_) for @{$logs->{$_}};
-        $str .= "console.groupEnd(\"$_\"); ";
-    }
-
-    $str .= "</script>\n";
 }
 
 sub _format_msg {

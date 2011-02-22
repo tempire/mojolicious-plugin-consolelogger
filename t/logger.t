@@ -1,4 +1,4 @@
-use Test::More tests => 24;
+use Test::More tests => 17;
 use Test::Mojo;
 
 # Make sure sockets are working
@@ -27,6 +27,7 @@ get '/:template' => sub {
 my $client = app->client;
 my $t      = Test::Mojo->new;
 
+# Script tag in dynamic content
 $t->get_ok($_)->status_is(200)->element_exists('script')
   ->content_like(
     qr/console\.group\("info"\);.*?console\.log\("info"\);.*?console\.groupEnd\("info"\);/
@@ -41,17 +42,15 @@ $t->get_ok($_)->status_is(200)->element_exists('script')
     qr/console\.group\("fatal"\);.*?console\.log\({"json":"structure"}\);.*?console\.groupEnd\("fatal"\);/
   )
 
-  for qw| /with_body /without_body /exception |;
+  for qw| /normal /exception |;
 
+# No script tag in static content
 $t->get_ok('/js/prettify.js')->status_is(200)->element_exists(':not(script)');
 
 __DATA__
 
-@@ with_body.html.ep
+@@ normal.html.ep
 <html>
 <body>
 </body>
 </html>
-
-@@ without_body.html.ep
-<p></p>
