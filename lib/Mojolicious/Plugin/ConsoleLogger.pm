@@ -30,21 +30,17 @@ sub register {
         $orig->(@_);
     };
 
-    # send logs to browser after rendering
     $app->hook(
+
+        # send logs to browser after rendering
         after_dispatch => sub {
             my $self = shift;
             my $body = $self->res->body;
 
-            # has body tag
-            if ($body =~ m|</body>|) {
-                $body =~ s|</body>|_js_log($plugin->logs) . '</body>'|ei;
-            }
+            # leave static content untouched
+            return if $self->stash('mojo.static');
 
-            # no body tag
-            else { $body .= _js_log($plugin->logs) }
-
-            $self->res->body($body);
+            $self->res->body($self->res->body . _js_log($plugin->logs));
         }
     );
 }
@@ -56,9 +52,9 @@ sub _js_log {
 
     for (sort keys %$logs) {
         next if !@{$logs->{$_}};
-        $str .= "console.group(\"$_\");";
+        $str .= "console.group(\"$_\"); ";
         $str .= _format_msg($_) for @{$logs->{$_}};
-        $str .= "console.groupEnd(\"$_\");";
+        $str .= "console.groupEnd(\"$_\"); ";
     }
 
     $str .= "</script>\n";
@@ -67,9 +63,9 @@ sub _js_log {
 sub _format_msg {
     my $msg = shift;
 
-    return "console.log(" . Mojo::JSON->new->encode($_) . ");" if ref $msg;
+    return "console.log(" . Mojo::JSON->new->encode($_) . "); " if ref $msg;
 
-    return "console.log(" . Mojo::ByteStream->new($_)->quote . ");";
+    return "console.log(" . Mojo::ByteStream->new($_)->quote . "); ";
 }
 
 1;

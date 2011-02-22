@@ -1,4 +1,4 @@
-use Test::More tests => 21;
+use Test::More tests => 24;
 use Test::Mojo;
 
 # Make sure sockets are working
@@ -42,6 +42,8 @@ $t->get_ok($_)->status_is(200)->element_exists('script')
   )
 
   for qw| /with_body /without_body /exception |;
+
+$t->get_ok('/js/prettify.js')->status_is(200)->element_exists(':not(script)');
 
 __DATA__
 
