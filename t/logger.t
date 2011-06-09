@@ -24,8 +24,7 @@ get '/:template' => sub {
 };
 
 # Tests
-my $client = app->client;
-my $t      = Test::Mojo->new;
+my $t = Test::Mojo->new;
 
 # Script tag in dynamic content
 $t->get_ok($_)->status_is(200)->element_exists('script')
