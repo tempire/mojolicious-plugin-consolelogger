@@ -1,0 +1,2 @@
+0.03  2011-06-08
+    - Removed unused reference to Mojo::Client in tests
