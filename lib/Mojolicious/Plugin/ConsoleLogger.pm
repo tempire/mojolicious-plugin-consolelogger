@@ -40,17 +40,17 @@ sub register {
       # Leave static content untouched
       return if $self->stash('mojo.static');
 
-      my $str = "\n<!-- Mojolicious logging -->\n<script>";
+      my $str = "\n<!-- Mojolicious logging -->\n<script>\n"
+        . "if (window.console) {";
 
       for (sort keys %$logs) {
         next if !@{$logs->{$_}};
         $str .= "\nconsole.group(\"$_\");";
-        # Clear logs on every request
-        $str .= _format_msg($_) for splice @{$logs->{$_}};
+        $str .= "\n" . _format_msg($_) for splice @{$logs->{$_}};
         $str .= "\nconsole.groupEnd(\"$_\");\n";
       }
 
-      $str .= "</script>\n";
+      $str .= "}</script>\n";
 
       $self->res->body($self->res->body . $str);
     }
@@ -60,9 +60,9 @@ sub register {
 sub _format_msg {
   my $msg = shift;
 
-  return "\nconsole.log(" . Mojo::JSON->new->encode($_) . "); " if ref $msg;
-
-  return "\nconsole.log(" . Mojo::ByteStream->new($_)->quote . "); ";
+  return ref $msg
+    ? "console.log(" . Mojo::JSON->new->encode($_) . "); "
+    : "console.log(" . Mojo::ByteStream->new($_)->quote . "); ";
 }
 
 1;
@@ -123,5 +123,7 @@ Implementation stolen from L<Plack::Middleware::ConsoleLogger>
 =head1 AUTHOR
 
 Glen Hinkle tempire@cpan.org
+
+Andrew Kirkpatrick
 
 =cut

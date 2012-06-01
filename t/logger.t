@@ -29,16 +29,16 @@ my $t = Test::Mojo->new;
 # Script tag in dynamic content
 $t->get_ok($_)->status_is(200)->element_exists('script')
   ->content_like(
-    qr/console\.group\("info"\);.*?console\.log\("info"\);.*?console\.groupEnd\("info"\);/
+    qr/console\.group\("info"\);\s*console\.log\("info"\);\s*console\.groupEnd\("info"\);/
   )
   ->content_like(
-    qr/console\.group\("debug"\);.*?console\.log\("debug"\);.*?console\.groupEnd\("debug"\);/
+    qr/console\.group\("debug"\);.*?console\.log\("debug"\);.*?console\.groupEnd\("debug"\);/s
   )
   ->content_like(
-    qr/console\.group\("error"\);.*?console\.log\("error"\);.*?console\.groupEnd\("error"\);/
+    qr/console\.group\("error"\);\s*console\.log\("error"\);\s*console\.groupEnd\("error"\);/
   )
   ->content_like(
-    qr/console\.group\("fatal"\);.*?console\.log\({"json":"structure"}\);.*?console\.groupEnd\("fatal"\);/
+    qr/console\.group\("fatal"\);\s*console\.log\({"json":"structure"}\);\s*console\.groupEnd\("fatal"\);/
   )
 
   for qw| /normal /exception |;
