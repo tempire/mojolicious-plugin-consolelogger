@@ -1,10 +1,10 @@
 =head1 NAME
 
-Mojolicious::Plugin::ConsoleLogger
+Mojolicious::Plugin::ConsoleLogger - Browser console logging
 
 =head1 DESCRIPTION
 
-Browser console logging for webkit dev tools/firebug
+Browser console logging
 
 =head1 USAGE
 
@@ -54,5 +54,7 @@ Implementation stolen from L<Plack::Middleware::ConsoleLogger>
 =head1 AUTHOR
 
 Glen Hinkle tempire@cpan.org
+
+Andrew Kirkpatrick
 
 =cut
