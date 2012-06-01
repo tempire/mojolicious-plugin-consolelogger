@@ -85,6 +85,7 @@ L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious log messages to your br
         app->log->error("This is bad");
         app->log->fatal("This is really bad");
         app->log->info("This isn't bad at all");
+        app->log->info({json => 'structure'});
 
         shift->render(text => 'Ahm in ur browzers, logginz ur console');
     };
