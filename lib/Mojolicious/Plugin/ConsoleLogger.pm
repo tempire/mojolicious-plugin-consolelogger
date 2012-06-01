@@ -15,8 +15,6 @@ has logs => sub {
   };
 };
 
-has keep_messages => sub {0};
-
 sub register {
   my ($plugin, $app) = @_;
 
@@ -60,9 +58,9 @@ sub register {
 sub _format_msg {
   my $msg = shift;
 
-  return ref $msg
-    ? "console.log(" . Mojo::JSON->new->encode($_) . "); "
-    : "console.log(" . Mojo::ByteStream->new($_)->quote . "); ";
+  return ref($msg)
+    ? "console.log(" . Mojo::JSON->new->encode($msg) . "); "
+    : "console.log(" . Mojo::ByteStream->new($msg)->quote . "); ";
 }
 
 1;
