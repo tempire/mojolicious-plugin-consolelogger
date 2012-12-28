@@ -4,9 +4,9 @@ Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 =head1 DESCRIPTION
 
-L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session and log messages to your browser's console tool.
+L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session, stash, config, and log messages to the browser's console tool.
 
-Logging operates only in development mode.
+  * Logging operates only in development mode.
 
 =head1 USAGE
 
