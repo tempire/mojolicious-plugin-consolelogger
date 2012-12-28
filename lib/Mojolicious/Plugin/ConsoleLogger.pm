@@ -4,7 +4,7 @@ use Mojo::Base 'Mojolicious::Plugin';
 use Mojo::ByteStream;
 use Mojo::JSON;
 
-our $VERSION = 0.04;
+our $VERSION = 0.05;
 
 has logs => sub {
   return {
@@ -38,9 +38,29 @@ sub register {
       # Leave static content untouched
       return if $self->stash('mojo.static');
 
+      # Do not allow if not development mode
+      return if $self->app->mode ne 'development';
+
       my $str = "\n<!-- Mojolicious logging -->\n<script>\n"
         . "if (window.console) {";
 
+      # Config, Session
+      for (qw/ config session /) {
+        $str .= "\nconsole.group(\"$_\");";
+        $str .= "\n" . _format_msg($self->$_);
+        $str .= "\nconsole.groupEnd(\"$_\");";
+      }
+
+      # Stash
+      $str .= "\nconsole.group(\"stash\");";
+
+      # Remove mojo.* and config keys
+      my @ok_keys = grep !/^(?:mojo\.|config$)/ => keys %{$self->stash};
+      $str .= "\n" . _format_msg({map { $_ => $self->stash($_) } @ok_keys});
+
+      $str .= "\nconsole.groupEnd(\"stash\");\n";
+
+      # Logs: fatal, info, debug, error
       for (sort keys %$logs) {
         next if !@{$logs->{$_}};
         $str .= "\nconsole.group(\"$_\");";
@@ -71,13 +91,15 @@ Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 =head1 DESCRIPTION
 
-L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious log messages to your browser's console tool.
+L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session and log messages to your browser's console tool.
+
+Logging operates only in development mode.
 
 =head1 USAGE
 
     use Mojolicious::Lite;
 
-    plugin 'console_logger';
+    plugin 'ConsoleLogger';
 
     get '/' => sub {
 
@@ -113,13 +135,13 @@ L<http://github.com/tempire/mojolicious-plugin-consolelogger>
 
 =head1 VERSION
 
-0.04
+0.05
 
 =head1 CREDITS
 
 Implementation stolen from L<Plack::Middleware::ConsoleLogger>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Glen Hinkle tempire@cpan.org
 
