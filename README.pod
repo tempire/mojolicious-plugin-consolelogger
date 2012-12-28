@@ -1,16 +1,18 @@
 =head1 NAME
 
-Mojolicious::Plugin::ConsoleLogger - Browser console logging
+Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 =head1 DESCRIPTION
 
-Browser console logging
+L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session and log messages to your browser's console tool.
+
+Logging operates only in development mode.
 
 =head1 USAGE
 
     use Mojolicious::Lite;
 
-    plugin 'console_logger';
+    plugin 'ConsoleLogger';
 
     get '/' => sub {
 
@@ -46,16 +48,15 @@ L<http://github.com/tempire/mojolicious-plugin-consolelogger>
 
 =head1 VERSION
 
-0.04
+0.05
 
 =head1 CREDITS
 
 Implementation stolen from L<Plack::Middleware::ConsoleLogger>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Glen Hinkle tempire@cpan.org
 
 Andrew Kirkpatrick
 
-=cut
