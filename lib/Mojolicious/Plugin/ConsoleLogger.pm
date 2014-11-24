@@ -2,7 +2,7 @@ package Mojolicious::Plugin::ConsoleLogger;
 
 use Mojo::Base 'Mojolicious::Plugin';
 use Mojo::ByteStream;
-use Mojo::JSON;
+use Mojo::JSON qw(decode_json encode_json);
 
 our $VERSION = 0.05;
 
@@ -33,6 +33,8 @@ sub register {
   $app->hook(
     after_dispatch => sub {
       my $self = shift;
+      # Patched Nov 23, 2014 to work with JSON
+      return if $self->res->headers->content_type eq 'application/json';
       my $logs = $plugin->logs;
 
       # Leave static content untouched
@@ -79,7 +81,7 @@ sub _format_msg {
   my $msg = shift;
 
   return ref($msg)
-    ? "console.log(" . Mojo::JSON->new->encode($msg) . "); "
+    ? "console.log(" . encode_json($msg) . "); "
     : "console.log(" . Mojo::ByteStream->new($msg)->quote . "); ";
 }
 
@@ -93,7 +95,7 @@ Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session, stash, config, and log messages to the browser's console tool.
 
-  * Logging operates only in development mode.
+* Logging operates only in development mode.
 
 =head1 USAGE
 
