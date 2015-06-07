@@ -21,9 +21,12 @@ sub register {
   # override Mojo::Log->log
   no strict 'refs';
   my $stash = \%{"Mojo::Log::"};
-  my $orig  = delete $stash->{"log"};
+  
+  # Mojolicious 6 renames Mojo::Log::log to Mojo::Log::_log
+  my $logsub = (defined &Mojo::Log::_log) ? "_log" : "log";
+  my $orig  = delete $stash->{$logsub};
 
-  *{"Mojo::Log::log"} = sub {
+  *{"Mojo::Log::$logsub"} = sub {
     push @{$plugin->logs->{$_[1]}} => $_[-1];
 
     # Original Mojo::Log->log
