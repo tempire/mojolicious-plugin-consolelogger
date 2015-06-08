@@ -1,3 +1,5 @@
+=pod
+
 =head1 NAME
 
 Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
@@ -6,7 +8,7 @@ Mojolicious::Plugin::ConsoleLogger - Console logging in your browser
 
 L<Mojolicious::Plugin::ConsoleLogger> pushes Mojolicious session, stash, config, and log messages to the browser's console tool.
 
-  * Logging operates only in development mode.
+* Logging operates only in development mode.
 
 =head1 USAGE
 
@@ -48,7 +50,7 @@ L<http://github.com/tempire/mojolicious-plugin-consolelogger>
 
 =head1 VERSION
 
-0.05
+0.06
 
 =head1 CREDITS
 
@@ -60,3 +62,6 @@ Glen Hinkle tempire@cpan.org
 
 Andrew Kirkpatrick
 
+Zhenyi Zhou
+
+=cut
