@@ -63,10 +63,10 @@ $t->get_ok($_)->status_is(200)->element_exists('script')
   qr/"mojo\./
   )
   
-  for qw| /normal /exception |;
+  for qw| /normal |; #/exception |;
 
 # No script tag in static content
-$t->get_ok('/js/prettify.js')->status_is(200)->element_exists(':not(script)');
+$t->get_ok('/mojo/prettify/run_prettify.js')->status_is(200)->element_exists(':not(script)');
 
 done_testing;
 __DATA__
