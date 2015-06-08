@@ -3,11 +3,11 @@ use Test::Mojo;
 
 # Make sure sockets are working
 plan skip_all => 'working sockets required for this test!'
-  unless Mojo::IOLoop->new->generate_port;    # Test server
+  unless Mojo::IOLoop::Server->new->generate_port;    # Test server
 
 use Mojolicious::Lite;
 
-plugin 'console_logger';
+plugin 'ConsoleLogger';
 
 get '/:template' => sub {
   my $self = shift;
